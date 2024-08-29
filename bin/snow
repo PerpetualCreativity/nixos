@@ -1,0 +1,60 @@
+#!/usr/bin/env fish
+
+set laptops forge
+set power_adapter_forge /sys/class/power_supply/macsmc-ac/online
+
+cd ~/nixos
+
+# rebuilds the system.
+# this is more complex than usually necessary because the gpu driver for asahi
+# is experimental, and i do not want to rebuild the world
+function rebuild
+    set cmd doas nixos-rebuild switch --flake .#$hostname
+    test (uname -r | cut -f2 -d'-') = asahi
+    and set -a cmd --impure
+    eval $cmd
+end
+
+function get_curr_gen
+    doas nix-env --list-generations --profile /nix/var/nix/profiles/system \
+        | grep current
+end
+
+switch $argv[1]
+    case update
+        test (contains $hostname $laptops)
+        and test (cat $power_adapter_$hostname) = 0
+        and read -P 'warn: on battery power. continue? ' response
+
+        test $response -eq y; or exit
+
+        nix flake update
+        test $status -eq 0; and rebuild
+    case rebuild
+        rebuild
+    case check
+        set curr_gen_date (get_curr_gen | awk '{printf "%s %s", $2, $3}')
+        set curr_gen_sec (date --date=$curr_gen_date +"%s")
+        set mod_times (stat ./**/*.* -c '%Y %n')
+        set newer_files
+        for tn in $mod_times
+            set time (echo $tn | cut -f1 -d' ')
+            test $time -gt $curr_gen_sec
+            and set -a newer_files (echo $tn | cut -f2 -d' ')
+        end
+        echo $newer_files
+        test (count $newer_files) -ne 0; and exit 1
+    case edit
+        hx .
+        test $status -ne 0; and exit
+        git add --all
+        rebuild
+        test $status -ne 0; and exit
+        set current (get_curr_gen | awk '{print $1}')
+        git commit -m "generation $hostname-$current"
+        git push
+    case '*'
+        echo 'options: rebuild check edit'
+end
+
+exit 0
