@@ -3,15 +3,22 @@
 set laptops forge
 set power_adapter_forge /sys/class/power_supply/macsmc-ac/online
 
+set servers snowpi
+
 cd ~/nixos
 
 # rebuilds the system.
 # this is more complex than usually necessary because the gpu driver for asahi
 # is experimental, and i do not want to rebuild the world
 function rebuild
-    set cmd doas nixos-rebuild switch --flake .#$hostname
-    test (uname -r | cut -f2 -d'-') = asahi
-    and set -a cmd --impure
+    set cmd doas nixos-rebuild switch
+    set host $hostname
+    if test (count $argv) -ge 1
+        set host $argv[1]
+        set -a cmd --target-host $host
+    end
+    set -a cmd --flake .#$host
+    test (uname -r | cut -f2 -d'-') = asahi; and set -a cmd --impure
     eval $cmd
 end
 
@@ -30,6 +37,16 @@ switch $argv[1]
 
         nix flake update
         test $status -eq 0; and rebuild
+    case deploy
+        if test (count $argv) -eq 1
+            echo 'must pass at least one host to build and deploy to'
+            exit
+        end
+        for host in $argv[2..]
+            contains $host $servers
+            and rebuild $host
+            or echo "$host is not a server."
+        end
     case rebuild
         rebuild
     case check
@@ -54,7 +71,7 @@ switch $argv[1]
         git commit -m "generation $hostname-$current"
         git push
     case '*'
-        echo 'options: rebuild check edit'
+        echo 'options: rebuild check edit update deploy'
 end
 
 exit 0
