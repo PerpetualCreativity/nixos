@@ -18,6 +18,8 @@
     gnome-dictionary
 
     gnome-tweaks
+
+    piper
   ] ++ (with gnomeExtensions; [
     just-perfection
     tailscale-qs
