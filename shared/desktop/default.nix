@@ -17,6 +17,8 @@
     alsa.enable = true;
   };
 
+  services.ratbagd.enable = true;
+
   # nixpkgs.config = {
   #   packageOverrides = super: let self = super.pkgs; in {
   #   };
