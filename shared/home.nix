@@ -11,6 +11,7 @@
       fzf
       zoxide
       entr
+      jq
 
       nil nix-your-shell
     ];

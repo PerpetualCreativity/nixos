@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +23,12 @@
   };
 
   outputs =
-  { self, nixpkgs, apple-silicon, home-manager, nix-index-database, ... }@inputs:
+  {
+    self, nixpkgs, home-manager,
+    apple-silicon, nixos-hardware,
+    nix-index-database,
+    ...
+  }@inputs:
   let
     # https://discourse.nixos.org/t/51146
     standard = nixosConfig: homeConfig: [
@@ -34,7 +40,6 @@
         home-manager.users.vulcan = import homeConfig;
       }
       nix-index-database.nixosModules.nix-index
-      { programs.command-not-found.enable = false; }
     ];
   in
   {
@@ -50,6 +55,20 @@
         system = "aarch64-linux";
         modules = standard ./hosts/snowpi ./shared/home.nix;
       };
+      foundry = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = standard ./hosts/foundry ./shared/desktop/home.nix ++ [
+          # ./hosts/foundry/substituter.nix
+          nixos-hardware.nixosModules.apple-t2
+        ];
+      };
     };
+  };
+
+  nixConfig = {
+    extra-substituters = [ "https://hydra.soopy.moe" ];
+    extra-trusted-public-keys = [
+      "hydra.soopy.moe:IZ/bZ1XO3IfGtq66g+C85fxU/61tgXLaJ2MlcGGXU8Q="
+    ];
   };
 }

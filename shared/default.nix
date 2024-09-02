@@ -27,15 +27,6 @@
           keepEnv = true;
           persist = true;
         }
-        {
-          users = [ "vulcan" ];
-          cmd = "nix-env"; args = [
-            "--list-generations"
-            "--profile"
-            "/nix/var/nix/profiles/system"
-          ];
-          noPass = true;
-        }
       ];
     };
   };

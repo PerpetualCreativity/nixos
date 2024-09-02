@@ -23,8 +23,7 @@ function rebuild
 end
 
 function get_curr_gen
-    doas nix-env --list-generations --profile /nix/var/nix/profiles/system \
-        | grep current
+    nixos-rebuild list-generations --json | jq '.[] | select(.current) | .generation'
 end
 
 switch $argv[1]
