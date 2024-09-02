@@ -66,9 +66,9 @@
   };
 
   nixConfig = {
-    extra-substituters = [ "https://hydra.soopy.moe" ];
+    extra-substituters = [ "https://cache.soopy.moe" ];
     extra-trusted-public-keys = [
-      "hydra.soopy.moe:IZ/bZ1XO3IfGtq66g+C85fxU/61tgXLaJ2MlcGGXU8Q="
+      "cache.soopy.moe-1:0RZVsQeR+GOh0VQI9rvnHz55nVXkFardDqfm4+afjPo="
     ];
   };
 }

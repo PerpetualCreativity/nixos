@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 {
-  imports = [ ./.. ];
+  imports = [
+    ./..
+    ./fonts.nix
+  ];
   hardware.bluetooth.enable = true;
   
   services.xserver = {
@@ -19,12 +22,4 @@
 
   services.ratbagd.enable = true;
 
-  # nixpkgs.config = {
-  #   packageOverrides = super: let self = super.pkgs; in {
-  #   };
-  # };
-
-  # environment.systemPackages = with pkgs; [
-  #   iosevka-term
-  # ];
 }
