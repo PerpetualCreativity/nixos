@@ -18,7 +18,7 @@
   boot = {
     binfmt = {
       emulatedSystems = [ "x86_64-linux" ];
-      registrations.x86_64-linux.interpreter = "${pkgs.box64}/bin/box64";
+      # registrations.x86_64-linux.interpreter = "${pkgs.box64}/bin/box64";
     };
     kernelParams = [ "apple_dcp.show_notch=1" ];
     loader = {
@@ -55,7 +55,7 @@
     priority = 5;
   };
 
-  environment.systemPackages = with pkgs; [ box64 ];
+  # environment.systemPackages = with pkgs; [ box64 ];
 
   # widevine support for firefox
   environment.sessionVariables.MOX_GMP_PATH = [
