@@ -20,7 +20,7 @@ function rebuild
     set -a cmd --flake .#$host
     test (uname -r | cut -f2 -d'-') = asahi; and set -a cmd --impure
     eval $cmd
-    set -e __snow_curr_gen_date
+    set -e __snow_curr_gen_sec
 end
 
 function get_curr_gen

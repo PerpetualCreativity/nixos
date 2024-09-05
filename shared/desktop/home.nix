@@ -37,6 +37,7 @@
         "just-perfection-desktop@just-perfection"
         "tailscale@joaophi.github.com"
         "syncthing-toggle@rehhouari.github.com"
+        "caffeine@patapon.info"
       ];
     };
     "org/gnome/desktop/peripherals/mouse" = {
