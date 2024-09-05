@@ -7,6 +7,7 @@
 
   home.packages = with pkgs; [
     box64
+    xsel
 
     firefox chromium
     # libreoffice-fresh
