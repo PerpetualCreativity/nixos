@@ -55,9 +55,11 @@ switch $argv[1]
             exit
         end
         for host in $argv[2..]
-            contains $host $servers
-            and rebuild $host
-            or echo "$host is not a server."
+            if contains $host $servers
+                rebuild $host
+            else
+                echo "$host is not a server."
+            end
         end
     case rebuild
         rebuild

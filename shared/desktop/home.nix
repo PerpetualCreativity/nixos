@@ -12,6 +12,7 @@
     # libreoffice-fresh
     inkscape
 
+    ptyxis
     errands newsflash
     armcord polari flare-signal fractal
     foliate tuba forge-sparks tex-match
