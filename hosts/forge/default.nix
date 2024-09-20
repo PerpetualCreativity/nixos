@@ -1,13 +1,17 @@
-{ config, lib, pkgs, apple-silicon, ... }:
-
 {
-  imports =
-    [
-      ../../shared/desktop
-      ../../shared/unify.nix
-      ./hardware-configuration.nix
-      apple-silicon.nixosModules.apple-silicon-support
-    ];
+  config,
+  lib,
+  pkgs,
+  apple-silicon,
+  ...
+}:
+{
+  imports = [
+    ../../shared/desktop
+    ../../shared/unify.nix
+    ./hardware-configuration.nix
+    apple-silicon.nixosModules.apple-silicon-support
+  ];
 
   hardware.asahi = {
     withRust = true;
@@ -46,10 +50,12 @@
       };
     };
   };
-  swapDevices = [ {
-    device = "/var/lib/swapfile";
-    size = 16*1024;
-  } ];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+    }
+  ];
   zramSwap = {
     enable = true;
     priority = 5;

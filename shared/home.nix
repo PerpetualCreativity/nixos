@@ -1,19 +1,23 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}:
+{
   home = {
     username = "vulcan";
     homeDirectory = "/home/vulcan";
     packages = with pkgs; [
       gh
-      ripgrep fd
+      ripgrep
+      fd
       fzf
       zoxide
       entr
       jq
 
-      nil nix-your-shell
+      nil
+      nix-your-shell
     ];
 
     stateVersion = "24.05"; # do not change
@@ -23,6 +27,8 @@
     git = {
       enable = true;
       ignores = [ ".stfolder/" ];
+      userEmail = "47309279+PerpetualCreativity@users.noreply.github.com";
+      userName = "Ved Thiru";
     };
     helix = {
       enable = true;
@@ -40,9 +46,22 @@
           select = "block";
         };
         statusline = {
-          left = ["mode" "spacer" "spinner" "diagnostics"];
-          center = ["version-control" "file-name" "file-modification-indicator"];
-          right = ["selections" "spacer" "position-percentage"];
+          left = [
+            "mode"
+            "spacer"
+            "spinner"
+            "diagnostics"
+          ];
+          center = [
+            "version-control"
+            "file-name"
+            "file-modification-indicator"
+          ];
+          right = [
+            "selections"
+            "spacer"
+            "position-percentage"
+          ];
         };
       };
     };

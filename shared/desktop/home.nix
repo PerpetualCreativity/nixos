@@ -1,31 +1,46 @@
-{ osConfig, pkgs, lib, ... }:
-
+{
+  osConfig,
+  pkgs,
+  lib,
+  ...
+}:
 {
   imports = [
     ../home.nix
   ];
 
-  home.packages = with pkgs; [
-    xsel
+  home.packages =
+    with pkgs;
+    [
+      xsel
 
-    firefox chromium
-    # libreoffice-fresh
-    inkscape
+      firefox
+      chromium
+      # libreoffice-fresh
+      inkscape
 
-    ptyxis
-    errands newsflash
-    armcord polari flare-signal fractal
-    foliate tuba forge-sparks tex-match
-    wordbook
+      ptyxis
+      errands
+      newsflash
+      armcord
+      polari
+      flare-signal
+      fractal
+      foliate
+      tuba
+      forge-sparks
+      tex-match
+      wordbook
 
-    gnome-tweaks
+      gnome-tweaks
 
-    piper
-  ] ++ (with gnomeExtensions; [
-    just-perfection
-    tailscale-qs
-    caffeine
-  ]);
+      piper
+    ]
+    ++ (with gnomeExtensions; [
+      just-perfection
+      tailscale-qs
+      caffeine
+    ]);
 
   dconf.settings = {
     "org/gnome/shell" = {
@@ -61,6 +76,8 @@
       notification-banner-position = 2;
       window-demands-attention-focus = true;
     };
-    chromium.commandLineArgs = [ "--user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36\"" ];
+    chromium.commandLineArgs = [
+      "--user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36\""
+    ];
   };
 }

@@ -1,4 +1,10 @@
-{ pkgs, lib, services, name, hostname }:
+{
+  pkgs,
+  lib,
+  services,
+  name,
+  hostname,
+}:
 {
   # list snapshots with `doas restic-$USER snapshots`
   # restore snapshots with `doas restic-$USER restore --target restore-backup latest`

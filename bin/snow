@@ -11,6 +11,7 @@ cd ~/nixos
 # this is more complex than usually necessary because the gpu driver for asahi
 # is experimental, and i do not want to rebuild the world
 function rebuild
+    nix fmt
     set cmd doas nixos-rebuild switch
     set host $hostname
     if test (count $argv) -ge 1
@@ -49,6 +50,7 @@ switch $argv[1]
         end
 
         doas nix flake update
+        test $status -eq 0
         rebuild
 
         # nix flake update

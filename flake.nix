@@ -23,51 +23,63 @@
   };
 
   outputs =
-  {
-    self, nixpkgs, home-manager,
-    apple-silicon, nixos-hardware,
-    nix-index-database,
-    ...
-  }@inputs:
-  let
-    # https://discourse.nixos.org/t/51146
-    standard = nixosConfig: homeConfig: hostModules: hostConfig: [
-      { _module.args = inputs; }
-      nixosConfig
-      ./shared/options.nix
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.vulcan = import homeConfig;
-      }
-      nix-index-database.nixosModules.nix-index
-    ] ++ hostModules ++ [ hostConfig ];
-  in
-  {
-    nixosConfigurations = {
-      forge = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        specialArgs = { inherit apple-silicon; };
-        modules = standard ./hosts/forge ./shared/desktop/home.nix [] {
-          local.desktop.swap_caps_and_esc = true;
-          nixpkgs.overlays = [ inputs.widevine-aarch64.overlays.default ];
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      apple-silicon,
+      nixos-hardware,
+      nix-index-database,
+      ...
+    }@inputs:
+    let
+      # https://discourse.nixos.org/t/51146
+      standard =
+        nixosConfig: homeConfig: hostModules: hostConfig:
+        [
+          { _module.args = inputs; }
+          nixosConfig
+          ./shared/options.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.vulcan = import homeConfig;
+          }
+          nix-index-database.nixosModules.nix-index
+        ]
+        ++ hostModules
+        ++ [ hostConfig ];
+    in
+    {
+      nixosConfigurations = {
+        forge = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {
+            inherit apple-silicon;
+          };
+          modules = standard ./hosts/forge ./shared/desktop/home.nix [ ] {
+            local.desktop.swap_caps_and_esc = true;
+            nixpkgs.overlays = [ inputs.widevine-aarch64.overlays.default ];
+          };
+        };
+        snowpi = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = standard ./hosts/snowpi ./shared/home.nix [ ] { };
+        };
+        foundry = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = standard ./hosts/foundry ./shared/desktop/home.nix [
+            nixos-hardware.nixosModules.apple-t2
+          ] { };
         };
       };
-      snowpi = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = standard ./hosts/snowpi ./shared/home.nix [] {};
-      };
-      foundry = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = standard ./hosts/foundry ./shared/desktop/home.nix [
-          nixos-hardware.nixosModules.apple-t2
-        ] {};
-      };
-    };
 
-    formatter = nixpkgs.alejandra;
-  };
+      formatter = nixpkgs.lib.attrsets.genAttrs [
+        "aarch64-linux"
+        "x86_64-linux"
+      ] (system: (import nixpkgs { inherit system; }).nixfmt-rfc-style);
+    };
 
   nixConfig = {
     extra-substituters = [ "https://cache.soopy.moe" ];
