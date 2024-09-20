@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ osConfig, pkgs, lib, ... }:
 
 {
   imports = [
@@ -16,7 +16,7 @@
     errands newsflash
     armcord polari flare-signal fractal
     foliate tuba forge-sparks tex-match
-    gnome-dictionary
+    wordbook
 
     gnome-tweaks
 
@@ -40,12 +40,13 @@
         "caffeine@patapon.info"
       ];
     };
+
     "org/gnome/desktop/peripherals/mouse" = {
       natural-scroll = true;
       speed = 0.4;
     };
 
-    "org/gnome/desktop/input-sources" = {
+    "org/gnome/desktop/input-sources" = lib.mkIf osConfig.local.desktop.swap_caps_and_esc {
       xkb-options = [ "caps:swapescape" ];
     };
 

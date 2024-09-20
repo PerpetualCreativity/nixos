@@ -1,10 +1,14 @@
-{ config, pkgs, ... }:
+{ config, pkgs, ... }@inputs:
 {
   imports = [
     ./..
-    ./fonts.nix
   ];
   hardware.bluetooth.enable = true;
+  hardware.bluetooth.settings = { General = { ControllerMode  = "bredr"; }; };
+  systemd.services.bluetooth.serviceConfig.ExecStart = [
+    ""
+    "${pkgs.bluez}/libexec/bluetooth/bluetoothd --noplugin=sap,avrcp"
+  ];
   
   services.xserver = {
     enable = true;
@@ -14,6 +18,8 @@
   };
   services.printing.enable = true;
   
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     pulse.enable = true;
@@ -21,5 +27,7 @@
   };
 
   services.ratbagd.enable = true;
+  hardware.keyboard.zsa.enable = true;
 
+  fonts.packages = with pkgs; [ inter iosevka victor-mono twemoji-color-font crimson-pro ];
 }

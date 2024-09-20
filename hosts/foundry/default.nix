@@ -1,4 +1,4 @@
-{ config, lib, pkgs }:
+{ config, lib, pkgs, ... }:
 {
   imports = [
     ../../shared/desktop
@@ -10,6 +10,7 @@
     efi.canTouchEfiVariables = true;
     efi.efiSysMountPoint = "/boot";
   };
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   networking.hostName = "foundry";
 
   system.stateVersion = "24.11";

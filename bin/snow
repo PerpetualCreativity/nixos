@@ -43,12 +43,16 @@ switch $argv[1]
     case update
         test (contains $hostname $laptops)
         and test (cat $power_adapter_$hostname) = 0
-        and read -P 'warn: on battery power. continue? ' response
+        if test $status -ne 0
+            read -P 'warn: on battery power. continue? ' response
+            test $response = y; or exit
+        end
 
-        test $response -eq y; or exit
+        doas nix flake update
+        rebuild
 
-        nix flake update
-        test $status -eq 0; and rebuild
+        # nix flake update
+        # test $status -eq 0; and rebuild
     case deploy
         if test (count $argv) -eq 1
             echo 'must pass at least one host to build and deploy to'

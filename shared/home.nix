@@ -27,25 +27,22 @@
     helix = {
       enable = true;
       defaultEditor = true;
-      settings = {
-        theme = "flatwhite";
-        editor = {
-          line-number = "relative";
-          lsp.display-messages = true;
-          idle-timeout = 100;
-          soft-wrap.enable = true;
-          cursorline = true;
-          color-modes = true;
-          cursor-shape = {
-            insert = "bar";
-            normal = "underline";
-            select = "block";
-          };
-          statusline = {
-            left = ["mode" "spacer" "spinner" "diagnostics"];
-            center = ["version-control" "file-name" "file-modification-indicator"];
-            right = ["selections" "spacer" "position-percentage"];
-          };
+      settings.editor = {
+        line-number = "relative";
+        lsp.display-messages = true;
+        idle-timeout = 100;
+        soft-wrap.enable = true;
+        cursorline = true;
+        color-modes = true;
+        cursor-shape = {
+          insert = "bar";
+          normal = "underline";
+          select = "block";
+        };
+        statusline = {
+          left = ["mode" "spacer" "spinner" "diagnostics"];
+          center = ["version-control" "file-name" "file-modification-indicator"];
+          right = ["selections" "spacer" "position-percentage"];
         };
       };
     };
@@ -65,6 +62,7 @@
         '';
         fish_prompt = ''
           set -g __fish_git_prompt_show_informative_status true
+          set -g __fish_git_prompt_use_informative_chars false
           set -g __fish_git_prompt_showuntrackedfiles true
           set -g __fish_git_prompt_showcolorhints true
           set -g __fish_git_prompt_char_stateseparator ' '
