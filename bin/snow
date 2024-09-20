@@ -72,12 +72,12 @@ switch $argv[1]
     case edit
         hx .
         test $status -ne 0; and exit
-        git add --all
+        doas git add --all
         rebuild
         test $status -ne 0; and exit
         set current (get_curr_gen generation)
-        git commit -m "generation $hostname-$current"
-        git push
+        doas git commit -m "generation $hostname-$current"
+        doas git push
     case '*'
         echo 'options: rebuild check edit update deploy'
 end
