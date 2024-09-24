@@ -2,6 +2,7 @@
   osConfig,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 {
@@ -14,8 +15,8 @@
     [
       xsel
 
-      firefox
-      chromium
+      # firefox
+      # chromium
       # libreoffice-fresh
       inkscape
 
@@ -76,8 +77,34 @@
       notification-banner-position = 2;
       window-demands-attention-focus = true;
     };
-    chromium.commandLineArgs = [
+  };
+  home.file.".mozilla/firefox/default/chrome/firefox-gnome-theme".source = inputs.firefox-gnome-theme;
+  programs.firefox = {
+    enable = true;
+    profiles.default = {
+      name = "Default";
+      isDefault = true;
+      settings = {
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        # "browser.uidensity" = 0;
+        # "browser.theme.dark-private-windows" = false;
+        "browser.tabs.drawInTitlebar" = true;
+        "svg.context-properties.content.enabled" = true;
+      };
+      userChrome = ''
+        @import "firefox-gnome-theme/userChrome.css";
+        /* @import "firefox-gnome-theme/theme/colors/dark.css"; */
+      '';
+      userContent = ''
+        @import "firefox-gnome-theme/userContent.css";
+      '';
+    };
+  };
+  programs.chromium = {
+    enable = true;
+    commandLineArgs = [
       "--user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36\""
     ];
   };
+
 }

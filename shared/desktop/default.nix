@@ -24,7 +24,15 @@
     desktopManager.gnome.enable = true;
     excludePackages = [ pkgs.xterm ];
   };
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.hplipWithPlugin ];
+  };
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
 
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;

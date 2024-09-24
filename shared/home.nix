@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   ...
 }:
@@ -15,6 +14,7 @@
       zoxide
       entr
       jq
+      hyperfine
 
       nil
       nix-your-shell
@@ -29,39 +29,43 @@
       ignores = [ ".stfolder/" ];
       userEmail = "47309279+PerpetualCreativity@users.noreply.github.com";
       userName = "Ved Thiru";
+      extraConfig.safe.directory = "~/nixos";
     };
     helix = {
       enable = true;
       defaultEditor = true;
-      settings.editor = {
-        line-number = "relative";
-        lsp.display-messages = true;
-        idle-timeout = 100;
-        soft-wrap.enable = true;
-        cursorline = true;
-        color-modes = true;
-        cursor-shape = {
-          insert = "bar";
-          normal = "underline";
-          select = "block";
-        };
-        statusline = {
-          left = [
-            "mode"
-            "spacer"
-            "spinner"
-            "diagnostics"
-          ];
-          center = [
-            "version-control"
-            "file-name"
-            "file-modification-indicator"
-          ];
-          right = [
-            "selections"
-            "spacer"
-            "position-percentage"
-          ];
+      settings = {
+        theme = "dracula";
+        editor = {
+          line-number = "relative";
+          lsp.display-messages = true;
+          idle-timeout = 100;
+          soft-wrap.enable = true;
+          cursorline = true;
+          color-modes = true;
+          cursor-shape = {
+            insert = "bar";
+            normal = "underline";
+            select = "block";
+          };
+          statusline = {
+            left = [
+              "mode"
+              "spacer"
+              "spinner"
+              "diagnostics"
+            ];
+            center = [
+              "version-control"
+              "file-name"
+              "file-modification-indicator"
+            ];
+            right = [
+              "selections"
+              "spacer"
+              "position-percentage"
+            ];
+          };
         };
       };
     };
@@ -96,9 +100,12 @@
         '';
         fish_right_prompt = ''
           set -l last_status $status
-          test -n "$IN_NIX_SHELL"; and echo (set_color blue --bold)'<'(set_color --italics)'devshell'(set_color --bold)'>'(set_color normal)
-          if test $last_status -ne 0
-              echo (set_color red --bold)" [$last_status]"(set_color normal)
+          test $last_status -ne 0; and echo (set_color red --bold)" [$last_status]"(set_color normal)
+          test $SHLVL -ne 1; and echo (set_color magenta --bold)" ($(math $SHLVL - 1))"(set_color normal)
+          if test -n "$IN_NIX_SHELL"
+            echo (set_color blue --bold)' <'(set_color --italics)'devshell'(set_color --bold)'>'(set_color normal)
+          else if echo $PATH | grep -qc /nix/store
+            echo (set_color blue --bold)' <'(set_color --italics)'nix shell'(set_color --bold)'>'(set_color normal)
           end
         '';
         fish_greeting = ''

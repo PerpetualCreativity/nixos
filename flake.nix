@@ -20,6 +20,10 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    firefox-gnome-theme = {
+      url = "github:rafaelmardojai/firefox-gnome-theme";
+      flake = false;
+    };
   };
 
   outputs =
@@ -42,9 +46,14 @@
           ./shared/options.nix
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.vulcan = import homeConfig;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.vulcan = import homeConfig;
+              extraSpecialArgs = {
+                inherit inputs;
+              };
+            };
           }
           nix-index-database.nixosModules.nix-index
         ]

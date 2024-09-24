@@ -1,0 +1,8 @@
+#!/usr/bin/env fish
+
+if test (count $argv) -eq 0
+    echo 'need printer ip'
+    exit
+end
+
+NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#hplipWithPlugin --impure --command "doas hp-setup -i $argv[1]"

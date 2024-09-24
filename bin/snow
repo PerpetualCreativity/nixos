@@ -20,12 +20,18 @@ function rebuild
     end
     set -a cmd --flake .#$host
     test (uname -r | cut -f2 -d'-') = asahi; and set -a cmd --impure
-    eval $cmd
+    eval $cmd; or exit
     set -e __snow_curr_gen_sec
 end
 
 function get_curr_gen
     nixos-rebuild list-generations --json | jq -r ".[] | select(.current) | .$argv[1]"
+end
+
+function push_config
+    set current (get_curr_gen generation)
+    git commit -m "generation $hostname-$current"
+    git push
 end
 
 switch $argv[1]
@@ -34,10 +40,14 @@ switch $argv[1]
         or set -U __snow_curr_gen_sec (date --date=(get_curr_gen date) +'%s')
         set mod_times (stat ./**/*.* -c '%Y %n')
         set newer_files
+        set ignore_files ./*.md
         for tn in $mod_times
             set time (echo $tn | cut -f1 -d' ')
-            test $time -gt $__snow_curr_gen_sec
-            and set -a newer_files (echo $tn | cut -f2 -d' ')
+            if test $time -gt $__snow_curr_gen_sec
+                set filename (echo $tn | cut -f2 -d' ')
+                not contains $filename $ignore_files
+                and set -a newer_files $filename
+            end
         end
         echo $newer_files
         test (count $newer_files) -ne 0; and exit 1
@@ -72,12 +82,13 @@ switch $argv[1]
     case edit
         hx .
         test $status -ne 0; and exit
-        doas git add --all
+        git add --all
         rebuild
         test $status -ne 0; and exit
-        set current (get_curr_gen generation)
-        doas git commit -m "generation $hostname-$current"
-        doas git push
+        push_config
+    case push
+        git add --all
+        push_config
     case '*'
         echo 'options: rebuild check edit update deploy'
 end
