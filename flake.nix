@@ -91,9 +91,13 @@
     };
 
   nixConfig = {
-    extra-substituters = [ "https://cache.soopy.moe" ];
+    extra-trusted-substituters = [
+      "https://cache.soopy.moe"
+      "https://ghostty.cachix.org"
+    ];
     extra-trusted-public-keys = [
       "cache.soopy.moe-1:0RZVsQeR+GOh0VQI9rvnHz55nVXkFardDqfm4+afjPo="
+      "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
     ];
   };
 }

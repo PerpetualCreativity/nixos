@@ -24,6 +24,15 @@
   };
 
   programs = {
+    ssh = {
+      enable = true;
+      matchBlocks = {
+        pace = {
+          host = "pace";
+          hostname = "login-ice.pace.gatech.edu";
+        };
+      };
+    };
     git = {
       enable = true;
       ignores = [ ".stfolder/" ];
@@ -38,7 +47,10 @@
         theme = "dracula";
         editor = {
           line-number = "relative";
-          lsp.display-messages = true;
+          lsp = {
+            display-messages = true;
+            display-inlay-hints = true;
+          };
           idle-timeout = 100;
           soft-wrap.enable = true;
           cursorline = true;
@@ -48,6 +60,7 @@
             normal = "underline";
             select = "block";
           };
+          indent-guides.render = true;
           statusline = {
             left = [
               "mode"
@@ -58,9 +71,12 @@
             center = [
               "version-control"
               "file-name"
+              "read-only-indicator"
               "file-modification-indicator"
             ];
             right = [
+              "workspace-diagnostics"
+              "spacer"
               "selections"
               "spacer"
               "position-percentage"
