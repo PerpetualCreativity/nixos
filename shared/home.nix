@@ -18,6 +18,8 @@
 
       nil
       nix-your-shell
+
+      sshfs
     ];
 
     stateVersion = "24.05"; # do not change
@@ -27,8 +29,9 @@
     ssh = {
       enable = true;
       matchBlocks = {
-        pace = {
-          host = "pace";
+        ice = {
+          host = "ice";
+          user = "vthiru3";
           hostname = "login-ice.pace.gatech.edu";
         };
       };
