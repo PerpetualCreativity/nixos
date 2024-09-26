@@ -51,6 +51,12 @@ switch $argv[1]
         end
         echo $newer_files
         test (count $newer_files) -ne 0; and exit 1
+    case search
+        if test (count $argv) -ne 2
+            echo 'provide pkgname to search'
+            exit
+        end
+        nix search nixpkgs $argv[2] --json | jq -r "[.[]] | unique_by(.pname) | .[] | select(.pname | test(\"^$argv[2]\")) | \"\\(.pname): \\(.description)\""
     case update
         test (contains $hostname $laptops)
         and test (cat $power_adapter_$hostname) = 0

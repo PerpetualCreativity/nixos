@@ -51,5 +51,6 @@
     victor-mono
     twemoji-color-font
     crimson-pro
+    scientifica
   ];
 }
