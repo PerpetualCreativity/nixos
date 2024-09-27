@@ -52,6 +52,7 @@ switch $argv[1]
         echo $newer_files
         test (count $newer_files) -ne 0; and exit 1
     case search
+        echo "this is broken! it prints the name of the derivation output, not the name of the package"
         if test (count $argv) -ne 2
             echo 'provide pkgname to search'
             exit
