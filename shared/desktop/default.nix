@@ -53,4 +53,5 @@
     crimson-pro
     scientifica
   ];
+  programs.wireshark.enable = true;
 }
