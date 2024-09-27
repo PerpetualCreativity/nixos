@@ -41,7 +41,7 @@
       ignores = [ ".stfolder/" ];
       userEmail = "47309279+PerpetualCreativity@users.noreply.github.com";
       userName = "Ved Thiru";
-      extraConfig.safe.directory = "~/nixos";
+      extraConfig.safe.directory = "/home/vulcan/nixos/.git";
     };
     helix = {
       enable = true;
