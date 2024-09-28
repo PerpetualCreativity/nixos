@@ -74,7 +74,19 @@
         };
         snowpi = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          modules = standard ./hosts/snowpi ./shared/home.nix [ ] { };
+          modules = standard ./hosts/snowpi ./shared/home.nix [ ] {
+            systemd.services.site-mon = {
+              serviceConfig.Type = "oneshot";
+              path =
+                let
+                  pkgs = import nixpkgs { system = "aarch64-linux"; };
+                in
+                [ pkgs.fish ];
+              script = ''fish /home/vulcan/site-mon'';
+              startAt = "daily";
+            };
+            systemd.timers.site-mon.timerConfig.Persistent = true;
+          };
         };
         foundry = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

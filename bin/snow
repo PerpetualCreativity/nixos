@@ -11,6 +11,7 @@ cd ~/nixos
 # this is more complex than usually necessary because the gpu driver for asahi
 # is experimental, and i do not want to rebuild the world
 function rebuild
+    doas echo rebuilding
     nix fmt
     set cmd doas nixos-rebuild switch
     set host $hostname
@@ -68,10 +69,7 @@ switch $argv[1]
 
         doas nix flake update
         test $status -eq 0
-        rebuild
-
-        # nix flake update
-        # test $status -eq 0; and rebuild
+        and rebuild
     case deploy
         if test (count $argv) -eq 1
             echo 'must pass at least one host to build and deploy to'

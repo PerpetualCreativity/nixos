@@ -17,7 +17,6 @@
 
       # firefox
       # chromium
-      wireshark
       libreoffice-fresh
       inkscape
 
