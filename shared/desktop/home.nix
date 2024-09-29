@@ -17,7 +17,7 @@
 
       # firefox
       # chromium
-      libreoffice-fresh
+      # libreoffice-fresh
       inkscape
 
       ptyxis

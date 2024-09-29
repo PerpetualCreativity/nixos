@@ -7,7 +7,6 @@
     username = "vulcan";
     homeDirectory = "/home/vulcan";
     packages = with pkgs; [
-      gh
       ripgrep
       fd
       fzf
@@ -42,6 +41,17 @@
       userEmail = "47309279+PerpetualCreativity@users.noreply.github.com";
       userName = "Ved Thiru";
       extraConfig.safe.directory = "/home/vulcan/nixos/.git";
+    };
+    gh = {
+      enable = true;
+      gitCredentialHelper = {
+        enable = true;
+        hosts = [
+          "https://github.com"
+          "https://gist.github.com"
+          "https://github.gatech.edu"
+        ];
+      };
     };
     helix = {
       enable = true;

@@ -21,6 +21,7 @@ function rebuild
     end
     set -a cmd --flake .#$host
     test (uname -r | cut -f2 -d'-') = asahi; and set -a cmd --impure
+    doas git config --global --add safe.directory '/home/vulcan/nixos/.git'
     eval $cmd; or exit
     set -e __snow_curr_gen_sec
 end
