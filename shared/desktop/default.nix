@@ -51,7 +51,7 @@
     victor-mono
     twemoji-color-font
     crimson-pro
-    scientifica
+    pixel-code
   ];
   programs.wireshark.enable = true;
   environment.systemPackages = with pkgs; [ wireshark ];

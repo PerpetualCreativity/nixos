@@ -96,7 +96,7 @@ switch $argv[1]
         git add --all
         push_config
     case '*'
-        echo 'options: rebuild check edit update deploy'
+        echo 'options: rebuild check edit update deploy search push'
 end
 
 exit 0
