@@ -36,12 +36,21 @@
       gnome-tweaks
 
       piper
+
+      inter
+      iosevka
+      victor-mono
+      twemoji-color-font
+      crimson-pro
+      pixel-code
+      wireshark
     ]
     ++ (with gnomeExtensions; [
       just-perfection
       tailscale-qs
       caffeine
     ]);
+  fonts.fontconfig.enable = true;
 
   dconf.settings = {
     "org/gnome/shell" = {

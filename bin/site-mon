@@ -1,0 +1,27 @@
+#!/usr/bin/env fish
+
+function report_success_and_exit
+    echo 'site_mon: site is up! exiting.'
+    exit
+end
+function test_site
+    curl -s -o /dev/null -w '%{response_code}' $argv[1]
+end
+set domain duckduckgo.com
+set proto 'http://'
+set site_status (test_site $proto$domain)
+test $site_status -eq 200; and report_success_and_exit
+if test $site_status -eq 301 # assume it is redirecting to https
+    set proto 'https://'
+    set site_status (test_site $proto$domain)
+    test $site_status -eq 200; and report_success_and_exit
+end
+
+# notify using discord webhook
+
+set webhook_url 'https://discord.com/api/webhooks/1289606456995479582/7zrGGyv1kSedYCJlGrV7TWfAeisItFdU-mvlf0MeNv60-wnNsdtnyckLrACEHK9F7Z6z'
+set vulcan_uid 463429013743075328
+
+set message "<@$vulcan_uid> SITE IS DOWN. site status: $site_status. link: [$domain]($proto$domain)"
+
+curl -i -H 'Accept: application/json' -H 'Content-Type:application/json' -X POST --data '{"content": "'$message'"}' $webhook_url

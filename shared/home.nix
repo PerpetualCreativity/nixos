@@ -14,6 +14,7 @@
       entr
       jq
       hyperfine
+      sl
 
       nil
       nix-your-shell
@@ -103,6 +104,7 @@
       shellAliases = {
         h = "hx .";
         py = "python3";
+        sl = "sl -wG";
       };
       functions = {
         mkcd = "mkdir $argv[1]; and cd $argv[1]";

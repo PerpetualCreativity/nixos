@@ -44,15 +44,4 @@
 
   services.ratbagd.enable = true;
   hardware.keyboard.zsa.enable = true;
-
-  fonts.packages = with pkgs; [
-    inter
-    iosevka
-    victor-mono
-    twemoji-color-font
-    crimson-pro
-    pixel-code
-  ];
-  programs.wireshark.enable = true;
-  environment.systemPackages = with pkgs; [ wireshark ];
 }
