@@ -21,7 +21,7 @@
       inkscape
 
       ptyxis
-      errands
+      easyeffects
       newsflash
       armcord
       polari
@@ -32,6 +32,7 @@
       forge-sparks
       tex-match
       wordbook
+      wireshark
 
       gnome-tweaks
 
@@ -43,7 +44,6 @@
       twemoji-color-font
       crimson-pro
       pixel-code
-      wireshark
     ]
     ++ (with gnomeExtensions; [
       just-perfection
