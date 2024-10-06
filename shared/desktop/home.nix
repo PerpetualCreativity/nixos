@@ -38,13 +38,14 @@
 
       piper
 
+      # fonts
       inter
       iosevka
       victor-mono
       twemoji-color-font
       crimson-pro
       pixel-code
-      monaspace
+      atkinson-hyperlegible
     ]
     ++ (with gnomeExtensions; [
       just-perfection
