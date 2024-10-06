@@ -44,6 +44,7 @@
       twemoji-color-font
       crimson-pro
       pixel-code
+      monaspace
     ]
     ++ (with gnomeExtensions; [
       just-perfection
