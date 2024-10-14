@@ -7,12 +7,12 @@
   imports = [
     ./..
   ];
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.settings = {
-    General = {
-      ControllerMode = "bredr";
-    };
+  boot.plymouth = {
+    enable = true;
+    font = "${pkgs.inter.outPath}/share/fonts/truetype/Inter.ttc";
   };
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.settings.General.ControllerMode = "bredr";
   systemd.services.bluetooth.serviceConfig.ExecStart = [
     ""
     "${pkgs.bluez}/libexec/bluetooth/bluetoothd --noplugin=sap,avrcp"
