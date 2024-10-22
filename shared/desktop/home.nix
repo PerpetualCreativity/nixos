@@ -23,14 +23,13 @@
       ptyxis
       easyeffects
       newsflash
-      armcord
+      legcord
       polari
       flare-signal
       fractal
       foliate
       tuba
-      forge-sparks
-      tex-match
+      hieroglyphic
       wordbook
       wireshark
 

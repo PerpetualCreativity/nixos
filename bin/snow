@@ -11,9 +11,9 @@ cd ~/nixos
 # this is more complex than usually necessary because the gpu driver for asahi
 # is experimental, and i do not want to rebuild the world
 function rebuild
-    doas echo rebuilding
+    echo rebuilding
     nix fmt
-    set cmd doas nixos-rebuild switch
+    set cmd nixos-rebuild build
     set host $hostname
     if test (count $argv) -ge 1
         set host $argv[1]
@@ -21,8 +21,9 @@ function rebuild
     end
     set -a cmd --flake .#$host
     test (uname -r | cut -f2 -d'-') = asahi; and set -a cmd --impure
-    doas git config --global --add safe.directory '/home/vulcan/nixos/.git'
     eval $cmd; or exit
+    doas result/bin/switch-to-configuration switch
+    rm -r result
     set -e __snow_curr_gen_sec
 end
 
@@ -68,7 +69,7 @@ switch $argv[1]
             test $response = y; or exit
         end
 
-        doas nix flake update
+        nix flake update
         test $status -eq 0
         and rebuild
     case deploy
