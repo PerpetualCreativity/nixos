@@ -11,7 +11,7 @@ cd ~/nixos
 # this is more complex than usually necessary because the gpu driver for asahi
 # is experimental, and i do not want to rebuild the world
 function rebuild
-    echo rebuilding
+    doas echo 'rebuilding authorized'
     nix fmt
     set cmd nixos-rebuild build
     set host $hostname
@@ -62,9 +62,7 @@ switch $argv[1]
         end
         nix search nixpkgs $argv[2] --json | jq -r "[.[]] | unique_by(.pname) | .[] | select(.pname | test(\"^$argv[2]\")) | \"\\(.pname): \\(.description)\""
     case update
-        test (contains $hostname $laptops)
-        and test (cat $power_adapter_$hostname) = 0
-        if test $status -ne 0
+        if test (contains $hostname $laptops); and test (cat $power_adapter_$hostname) = 0
             read -P 'warn: on battery power. continue? ' response
             test $response = y; or exit
         end

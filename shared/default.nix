@@ -12,6 +12,10 @@
       ];
       auto-optimise-store = true;
       extra-platforms = config.boot.binfmt.emulatedSystems;
+      trusted-users = [
+        "root"
+        "vulcan"
+      ];
     };
     gc = {
       automatic = true;
