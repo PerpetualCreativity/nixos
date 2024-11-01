@@ -13,18 +13,19 @@ cd ~/nixos
 function rebuild
     doas echo 'rebuilding authorized'
     nix fmt
-    set cmd nixos-rebuild build
-    set host $hostname
-    if test (count $argv) -ge 1
-        set host $argv[1]
-        set -a cmd --target-host $host
-    end
-    set -a cmd --flake .#$host
+    set cmd nixos-rebuild build --flake .#$hostname
     test (uname -r | cut -f2 -d'-') = asahi; and set -a cmd --impure
     eval $cmd; or exit
     doas result/bin/switch-to-configuration switch
     rm -r result
     set -e __snow_curr_gen_sec
+end
+
+function deploy
+    nix fmt
+    set host $argv[1]
+    nixos-rebuild switch --target-host $host --flake .#$host
+    or exit
 end
 
 function get_curr_gen
@@ -77,7 +78,7 @@ switch $argv[1]
         end
         for host in $argv[2..]
             if contains $host $servers
-                rebuild $host
+                deploy $host
             else
                 echo "$host is not a server."
             end

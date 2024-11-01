@@ -12,4 +12,5 @@
     configDir = "/home/vulcan/.config/syncthing";
     openDefaultPorts = true;
   };
+  systemd.services.tailscaled.after = [ "NetworkManager-wait-online.service" ];
 }

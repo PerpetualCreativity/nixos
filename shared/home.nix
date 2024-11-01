@@ -15,6 +15,8 @@
       jq
       hyperfine
       sl
+      unzip
+      difftastic
 
       nil
       nix-your-shell

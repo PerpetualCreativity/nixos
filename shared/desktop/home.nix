@@ -14,6 +14,7 @@
     with pkgs;
     [
       xsel
+      wl-clipboard
 
       # firefox
       # chromium
@@ -21,6 +22,7 @@
       inkscape
 
       ptyxis
+      papers
       easyeffects
       newsflash
       legcord

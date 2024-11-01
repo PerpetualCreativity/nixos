@@ -7,10 +7,6 @@
   imports = [
     ./..
   ];
-  boot.plymouth = {
-    enable = true;
-    font = "${pkgs.inter.outPath}/share/fonts/truetype/Inter.ttc";
-  };
   hardware.bluetooth.enable = true;
   hardware.bluetooth.settings.General.ControllerMode = "bredr";
   systemd.services.bluetooth.serviceConfig.ExecStart = [
@@ -24,6 +20,13 @@
     desktopManager.gnome.enable = true;
     excludePackages = [ pkgs.xterm ];
   };
+  environment.gnome.excludePackages = with pkgs; [
+    yelp
+    evince
+    gnome-tour
+    gnome-clocks
+  ];
+
   services.printing = {
     enable = true;
     drivers = [ pkgs.hplipWithPlugin ];
@@ -44,16 +47,4 @@
 
   services.ratbagd.enable = true;
   hardware.keyboard.zsa.enable = true;
-
-  virtualisation.docker = {
-    enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
-    daemon.settings = {
-      data-root = "/home/vulcan/.dockerd";
-    };
-  };
-  users.users.vulcan.extraGroups = [ "docker" ];
 }
