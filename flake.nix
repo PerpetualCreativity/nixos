@@ -24,6 +24,11 @@
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
     };
+    ghostty = {
+      url = "git+ssh://git@github.com/ghostty-org/ghostty";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -80,9 +85,16 @@
         };
         foundry = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = standard ./hosts/foundry ./shared/desktop/home.nix [
-            nixos-hardware.nixosModules.apple-t2
-          ] { };
+          modules =
+            standard ./hosts/foundry ./shared/desktop/home.nix
+              [
+                nixos-hardware.nixosModules.apple-t2
+              ]
+              {
+                environment.systemPackages = [
+                  inputs.ghostty.packages.x86_64-linux.default
+                ];
+              };
         };
       };
 

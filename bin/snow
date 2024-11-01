@@ -13,11 +13,11 @@ cd ~/nixos
 function rebuild
     doas echo 'rebuilding authorized'
     nix fmt
-    set cmd nixos-rebuild build --flake .#$hostname
+    set cmd nix build --print-out-paths .#nixosConfigurations.$hostname.config.system.build.toplevel
     test (uname -r | cut -f2 -d'-') = asahi; and set -a cmd --impure
-    eval $cmd; or exit
-    doas result/bin/switch-to-configuration switch
-    rm -r result
+    set result (eval $cmd); or exit
+    doas nix-env -p /nix/var/nix/profiles/system --set $result
+    doas $result/bin/switch-to-configuration switch
     set -e __snow_curr_gen_sec
 end
 
