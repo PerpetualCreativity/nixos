@@ -42,14 +42,12 @@ switch $argv[1]
     case check
         set -qU __snow_curr_gen_sec
         or set -U __snow_curr_gen_sec (date --date=(get_curr_gen date) +'%s')
-        set mod_times (stat ./**/*.* -c '%Y %n')
+        set mod_times (stat ./**/*.nix ./flake.lock -c '%Y %n')
         set newer_files
-        set ignore_files ./*.md
         for tn in $mod_times
             set time (echo $tn | cut -f1 -d' ')
             if test $time -gt $__snow_curr_gen_sec
                 set filename (echo $tn | cut -f2 -d' ')
-                not contains $filename $ignore_files
                 and set -a newer_files $filename
             end
         end

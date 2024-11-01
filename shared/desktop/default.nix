@@ -47,4 +47,6 @@
 
   services.ratbagd.enable = true;
   hardware.keyboard.zsa.enable = true;
+
+  documentation.man.generateCaches = true;
 }
