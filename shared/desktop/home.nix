@@ -49,7 +49,9 @@
       atkinson-hyperlegible
 
       # man pages
-      linux-manual man-pages man-pages-posix
+      linux-manual
+      man-pages
+      man-pages-posix
     ]
     ++ (with gnomeExtensions; [
       just-perfection

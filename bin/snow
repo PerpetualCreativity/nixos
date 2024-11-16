@@ -18,6 +18,7 @@ function rebuild
     set result (eval $cmd); or exit
     doas nix-env -p /nix/var/nix/profiles/system --set $result
     doas $result/bin/switch-to-configuration switch
+    unlink result
     set -e __snow_curr_gen_sec
 end
 
@@ -42,7 +43,7 @@ switch $argv[1]
     case check
         set -qU __snow_curr_gen_sec
         or set -U __snow_curr_gen_sec (date --date=(get_curr_gen date) +'%s')
-        set mod_times (stat ./**/*.nix ./flake.lock -c '%Y %n')
+        set mod_times (stat ./flake.lock ./**/*.nix -c '%Y %n')
         set newer_files
         for tn in $mod_times
             set time (echo $tn | cut -f1 -d' ')

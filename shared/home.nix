@@ -44,6 +44,10 @@
       userEmail = "47309279+PerpetualCreativity@users.noreply.github.com";
       userName = "Ved Thiru";
       extraConfig.safe.directory = "/home/vulcan/nixos/.git";
+      difftastic = {
+        enable = true;
+        display = "inline";
+      };
     };
     gh = {
       enable = true;
@@ -142,8 +146,10 @@
           end
         '';
         fish_greeting = ''
-          set files (snow check)
-          test $status -ne 0; and echo "configs newer than last rebuild:" $files
+          if not set -q $SILENCE_GREETING
+            set files (snow check)
+            test $status -ne 0; and echo "configs newer than last rebuild:" $files
+          end
         '';
       };
       shellInit = ''

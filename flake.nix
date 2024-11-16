@@ -10,7 +10,7 @@
     };
     apple-silicon = {
       url = "github:tpwrules/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
     widevine-aarch64 = {
       url = "github:epetousis/nixos-aarch64-widevine";
@@ -105,7 +105,7 @@
     };
 
   nixConfig = {
-    extra-trusted-substituters = [
+    extra-substituters = [
       "https://cache.soopy.moe"
       "https://ghostty.cachix.org"
     ];
