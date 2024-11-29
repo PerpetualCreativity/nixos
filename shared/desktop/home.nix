@@ -16,8 +16,6 @@
       xsel
       wl-clipboard
 
-      # firefox
-      # chromium
       # libreoffice-fresh
       inkscape
 
@@ -33,7 +31,7 @@
       tuba
       hieroglyphic
       wordbook
-      wireshark
+      turtle
 
       gnome-tweaks
 
