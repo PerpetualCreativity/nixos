@@ -10,7 +10,6 @@
     };
     apple-silicon = {
       url = "github:tpwrules/nixos-apple-silicon";
-      # inputs.nixpkgs.follows = "nixpkgs";
     };
     widevine-aarch64 = {
       url = "github:epetousis/nixos-aarch64-widevine";
@@ -29,6 +28,7 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs";
     };
+    ghostty-hm.url = "github:clo4/ghostty-hm-module";
   };
 
   outputs =
@@ -39,6 +39,8 @@
       apple-silicon,
       nixos-hardware,
       nix-index-database,
+      ghostty,
+      ghostty-hm,
       ...
     }@inputs:
     let
@@ -91,9 +93,7 @@
                 nixos-hardware.nixosModules.apple-t2
               ]
               {
-                environment.systemPackages = [
-                  inputs.ghostty.packages.x86_64-linux.default
-                ];
+                local.desktop.ghostty = true;
               };
         };
       };

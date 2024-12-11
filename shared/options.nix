@@ -7,4 +7,10 @@ with lib;
     example = true;
     type = lib.types.bool;
   };
+  options.local.desktop.ghostty = mkOption {
+    description = lib.mdDoc "whether to install ghostty on a desktop";
+    default = false;
+    example = true;
+    type = lib.types.bool;
+  };
 }

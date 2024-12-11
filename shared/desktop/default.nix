@@ -1,8 +1,10 @@
 {
   config,
   pkgs,
+  lib,
+  ghostty,
   ...
-}@inputs:
+}:
 {
   imports = [
     ./..
@@ -49,4 +51,9 @@
   hardware.keyboard.zsa.enable = true;
 
   documentation.man.generateCaches = true;
+
+  environment.systemPackages = lib.mkMerge [
+    [ ]
+    (lib.mkIf config.local.desktop.ghostty [ ghostty.packages.x86_64-linux.default ])
+  ];
 }
