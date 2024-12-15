@@ -9,6 +9,7 @@
   imports = [
     ../home.nix
     inputs.ghostty-hm.homeModules.default
+    ./niri.nix
   ];
 }
 // lib.mkMerge [

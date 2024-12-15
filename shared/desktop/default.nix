@@ -3,12 +3,14 @@
   pkgs,
   lib,
   ghostty,
+  inputs,
   ...
 }:
 {
   imports = [
     ./..
   ];
+  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
   hardware.bluetooth.enable = true;
   hardware.bluetooth.settings.General.ControllerMode = "bredr";
   systemd.services.bluetooth.serviceConfig.ExecStart = [
@@ -28,6 +30,10 @@
     gnome-tour
     gnome-clocks
   ];
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri;
+  };
 
   services.printing = {
     enable = true;
@@ -53,7 +59,7 @@
   documentation.man.generateCaches = true;
 
   environment.systemPackages = lib.mkMerge [
-    [ ]
+    (with pkgs; [ swaylock ])
     (lib.mkIf config.local.desktop.ghostty [ ghostty.packages.x86_64-linux.default ])
   ];
 }

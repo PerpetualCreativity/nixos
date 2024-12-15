@@ -64,7 +64,7 @@
       enable = true;
       defaultEditor = true;
       settings = {
-        theme = "dracula";
+        theme = "rose_pine_moon";
         editor = {
           line-number = "relative";
           lsp = {

@@ -29,6 +29,8 @@
       inputs.nixpkgs-unstable.follows = "nixpkgs";
     };
     ghostty-hm.url = "github:clo4/ghostty-hm-module";
+    niri.url = "github:sodiboo/niri-flake";
+    anyrun.url = "github:anyrun-org/anyrun";
   };
 
   outputs =
@@ -41,6 +43,8 @@
       nix-index-database,
       ghostty,
       ghostty-hm,
+      niri,
+      anyrun,
       ...
     }@inputs:
     let
@@ -48,7 +52,7 @@
       standard =
         nixosConfig: homeConfig: hostModules: hostConfig:
         [
-          { _module.args = inputs; }
+          { _module.args.inputs = inputs; }
           nixosConfig
           ./shared/options.nix
           home-manager.nixosModules.home-manager
@@ -108,10 +112,12 @@
     extra-substituters = [
       "https://cache.soopy.moe"
       "https://ghostty.cachix.org"
+      "https://anyrun.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.soopy.moe-1:0RZVsQeR+GOh0VQI9rvnHz55nVXkFardDqfm4+afjPo="
       "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
+      "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
     ];
   };
 }
