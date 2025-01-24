@@ -36,6 +36,12 @@
           user = "vthiru3";
           hostname = "login-ice.pace.gatech.edu";
         };
+        rohansrv = {
+          host = "rohansrv";
+          user = "vulcan";
+          hostname = "bafna.dev";
+          port = 52932;
+        };
       };
     };
     git = {
