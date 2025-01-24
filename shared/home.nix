@@ -46,10 +46,16 @@
     };
     git = {
       enable = true;
-      ignores = [ ".stfolder/" ];
+      ignores = [
+        ".stfolder/"
+        ".envrc"
+      ];
       userEmail = "47309279+PerpetualCreativity@users.noreply.github.com";
       userName = "Ved Thiru";
-      extraConfig.safe.directory = "/home/vulcan/nixos/.git";
+      extraConfig = {
+        safe.directory = "/home/vulcan/nixos/.git";
+        help.autocorrect = "prompt";
+      };
       difftastic = {
         enable = true;
         display = "inline";

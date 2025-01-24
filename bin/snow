@@ -25,7 +25,7 @@ end
 function deploy
     nix fmt
     set host $argv[1]
-    nixos-rebuild switch --target-host $host --flake .#$host
+    nixos-rebuild switch --target-host $host --flake .#$host --use-remote-sudo
     or exit
 end
 

@@ -57,6 +57,7 @@
     wget
     strace
     ltrace
+    doas-sudo-shim # to support --use-remote-sudo
   ];
   programs.fish.enable = true;
 }
