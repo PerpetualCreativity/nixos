@@ -69,12 +69,19 @@
           modules = standard ./hosts/forge ./shared/desktop/home.nix [ ] {
             local.desktop.swap_caps_and_esc = true;
             nixpkgs.overlays = [ inputs.widevine-aarch64.overlays.default ];
+            virtualisation.docker.enable = true;
+            users.users.vulcan.extraGroups = [ "docker" ];
           };
         };
         snowpi = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = standard ./hosts/snowpi ./shared/home.nix [ ./shared/site-mon.nix ] {
             documentation.man.generateCaches = false;
+            services.miniflux = {
+              enable = true;
+              adminCredentialsFile = "/home/vulcan/.miniflux_conf";
+              config.PORT = "8380";
+            };
           };
         };
         foundry = nixpkgs.lib.nixosSystem {
