@@ -178,6 +178,7 @@
       enable = true;
       nix-direnv.enable = true;
     };
+    man.generateCaches = false;
     home-manager.enable = true;
   };
 }
