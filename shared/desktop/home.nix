@@ -8,6 +8,7 @@
 {
   imports = [
     ../home.nix
+    inputs.spicetify-nix.homeManagerModules.default
   ];
 }
 // lib.mkMerge [
@@ -123,6 +124,19 @@
         "--user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36\""
       ];
     };
+    programs.spicetify =
+      let
+        spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+      in
+      {
+        enable = true;
+        enabledExtensions = with spicePkgs.extensions; [
+          adblock
+          hidePodcasts
+        ];
+        theme = spicePkgs.themes.catppuccin;
+        colorScheme = "mocha";
+      };
   }
   (lib.mkIf osConfig.local.desktop.ghostty {
     programs.ghostty = {
