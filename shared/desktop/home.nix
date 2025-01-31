@@ -59,6 +59,8 @@
         just-perfection
         tailscale-qs
         caffeine
+        tiling-shell
+        blur-my-shell
       ]);
     fonts.fontconfig.enable = true;
 

@@ -15,6 +15,7 @@
       jq
       hyperfine
       sl
+      zip
       unzip
       difftastic
 
