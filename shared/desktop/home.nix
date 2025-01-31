@@ -53,6 +53,7 @@
         linux-manual
         man-pages
         man-pages-posix
+        signal-desktop
       ]
       ++ (with gnomeExtensions; [
         just-perfection
@@ -134,8 +135,8 @@
           adblock
           hidePodcasts
         ];
-        theme = spicePkgs.themes.catppuccin;
-        colorScheme = "mocha";
+        theme = spicePkgs.themes.ziro;
+        colorScheme = "rose-pine-moon";
       };
   }
   (lib.mkIf osConfig.local.desktop.ghostty {
