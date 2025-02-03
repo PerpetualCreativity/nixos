@@ -46,7 +46,7 @@
       settings = {
         IPv6.Enabled = true;
         Settings.AutoConnect = true;
-        General.EnableNetworkConfiguration = true;
+        # General.EnableNetworkConfiguration = true;
       };
     };
   };
