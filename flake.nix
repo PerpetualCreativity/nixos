@@ -37,7 +37,6 @@
       apple-silicon,
       nixos-hardware,
       nix-index-database,
-      nixos-generators,
       ...
     }@inputs:
     let
@@ -101,13 +100,13 @@
                 virtualisation.virtualbox.host.enable = true;
                 virtualisation.docker.enable = true;
                 users.users.vulcan.extraGroups = [ "docker" ];
+                #dconf.settings."org/gnome/shell/extensions/just-perfection".panel = false;
               };
         };
         anvil = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules =
-            standard ./hosts/anvil ./shared/home.nix [ ] { };
-        }
+          modules = standard ./hosts/anvil ./shared/home.nix [ ] { };
+        };
       };
 
       formatter = nixpkgs.lib.attrsets.genAttrs [

@@ -21,7 +21,10 @@
   };
   boot = {
     binfmt = {
-      emulatedSystems = [ "x86_64-linux" "i686-linux" ];
+      emulatedSystems = [
+        "x86_64-linux"
+        "i686-linux"
+      ];
       registrations.x86_64-linux.interpreter = "${pkgs.box64}/bin/box64";
     };
     kernelParams = [ "apple_dcp.show_notch=1" ];
